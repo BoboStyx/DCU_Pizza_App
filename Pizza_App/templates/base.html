@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+
+            {% block title %}
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <nav>
+            <li><a href="/">Home</a></li>
+            <li><a href="/orders">Orders</a></li>
+            <li><a href="">Another link</a></li>
+            <li><a href="">Yet Another link</a></li>
+        </nav>
+        {% block content %}
+        {% endblock %}
+        <footer>
+            Copyright ME
+        </footer>
+    </body>
+</html>
