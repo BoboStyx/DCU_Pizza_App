@@ -11,3 +11,9 @@ def order(request):
 
 def ordering(request):
     return render(request, "ordering.html")
+
+def login(request):
+    return render(request, 'login.html')
+
+def logout(request):
+    return render(request, "logout")

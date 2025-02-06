@@ -10,10 +10,14 @@
     <body>
         <nav>
             <li><a href="/">Home</a></li>
-            <li><a href="past/orders">Previous Orders</a></li>
-            <li><a href="order">Place an Order</a></li>
+            <li><a href="orders">Previous Orders</a></li>
+            <li><a href="ordering">Place an Order</a></li>
             <li><a href="">Cart</a></li>
-            <li><a href="">Login/Log-out</a></li>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Log In</button>
+              </form>
         </nav>
         {% block content %}
         {% endblock %}
