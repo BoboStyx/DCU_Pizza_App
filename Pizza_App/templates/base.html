@@ -10,15 +10,15 @@
     <body>
         <nav>
             <li><a href="/">Home</a></li>
-            <li><a href="orders">Previous Orders</a></li>
+            {% if user.is_authenticated %}
             <li><a href="ordering">Place an Order</a></li>
             <li><a href="">Cart</a></li>
-            <form method="post">
+            <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                {{ form }}
-                <button type="submit">Log In</button>
+                <button type="submit">Log Out</button>
               </form>
-        </nav>
+        {% endif %}            
+
         {% block content %}
         {% endblock %}
         <footer>
