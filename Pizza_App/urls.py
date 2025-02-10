@@ -1,13 +1,16 @@
 from django.urls import path
-from .views import SignUpView
 from . import views
-
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-   path('', views.index, name="homepage"), 
-   path('ordering', views.ordering, name="new_orderpage"),
-   path('cart', views.cart, name='cart'),
-   path('login', views.login, name="loginpage"),
-   path('payment', views.payment, name='payment'),
-   path('signup', SignUpView.as_view(), name='signup'),
+    path('', views.index, name='index'),
+    path('signup/', views.signup, name='signup'),
+    path('login/', views.login, name='login'),
+    path('order/', views.ordering, name='order'),
+    path('payment/', views.payment, name='payment'),
+    #path('previous_orders/', views.prev, name='previous_orders'),
+    #path('order_complete/<int:order_id>', views.order_complete, name='order_complete'),
+    path('logout/', LogoutView.as_view(next_page="/"), name="logout"),
+    path('pizza_cart/', views.cart, name="cart"),
+    #path('cart/remove/<int:pizza_id>/',views.remove_from_cart, name='remove_from_cart'),
 ]
