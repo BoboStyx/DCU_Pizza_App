@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Checkout
+{% endblock %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    
+    <h3>Payment Details</h3>
+    <div>
+        {% for field in payment %}
+        <div>
+            <label>{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3>Billing Address</h3>
+    <div>
+        {% for field in address %}
+        <div>
+            <label>{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <button type="submit">
+        Complete Order
+    </button>
+</form>
+{% endblock %}

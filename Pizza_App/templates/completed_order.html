@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}
+Completed Order!
+{% endblock %}
+{% block content %}
+<div>
+    <div>
+        <div>
+            <h1 class="order-title">Your Pizza Adventure Begins!</h1>
+            <p >Order #{{ order.id }} is being prepared</p>
+        </div>
+
+        {% if order.pizza.all %}
+            <div>
+                <h3>Your Masterpieces</h3>
+                {% for pizza in order.pizza.all %}
+                    <div>
+                        <div>
+                            <strong>{{ pizza.size }} Pizza</strong>
+                        </div>
+                        <div>
+                            Crust: {{ pizza.crust }}
+                        </div>
+                        <div>
+                            Sauce: {{ pizza.sauce }}
+                        </div>
+                        <div>
+                            Cheese: {{ pizza.cheese }}
+                        </div>
+                        <div>
+                            {% if pizza.topping.all %}
+                            Toppings:
+                                {% for topping in pizza.topping.all %}
+                                    <span>{{ topping.topping }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span>No toppings</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div>
+                <p>No pizzas in this order</p>
+            </div>
+        {% endif %}
+
+        <div>
+            <h3>Delivery Details</h3>
+            <div>
+                {{ order.address }}
+            </div>
+        </div>
+
+        <div>
+            <a href="{% url 'index' %}">
+                Return Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

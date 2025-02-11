@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}
+Your Cart
+{% endblock %}
+{% block content %}
+{% if pizzas %}
+<div>
+    {% for pizza in pizzas %}
+    <div>
+        <div>
+            <div>
+                <div>
+                    <h5>{{ pizza.size }} Pizza</h5>
+                </div>
+                <h3>€{{ pizza.Total_Price }}</h3>
+            </div>
+            
+            <div>
+                <div>
+                    <span>{{ pizza.crust }} Crust</span>
+                </div>
+                <div>
+                    <span>{{ pizza.sauce }} Sauce</span>
+                </div>
+                <div>
+                    <span>{{ pizza.cheese }} Cheese</span>
+                </div>
+                
+                <div>
+                    <div>
+                        {% if pizza.topping.all %}
+                            {% for topping in pizza.topping.all %}
+                                <span>{{ topping.topping }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span>No toppings</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <form action="{% url 'removed_from_cart' pizza.id %}" method="POST"">
+                    {% csrf_token %}
+                    <button type="submit">
+                        Remove Item
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div>
+    <div>
+        <span>Order Total</span>
+        <span>€{{ total }}</span>
+    </div>
+</div>
+
+<div>
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <button type="submit">
+            Proceed to Payment
+        </button>
+    </form>
+    
+    <a href="{% url 'order' %}">
+        Add Another Pizza
+    </a>
+</div>
+{% else %}
+<div>
+    <div>
+        <h3>No items in cart</h3>
+        <a href="{% url 'order' %}">
+            Make an Order
+        </a>
+    </div>
+</div>
+{% endif %}
+</div>
+
+
+{% endblock %}

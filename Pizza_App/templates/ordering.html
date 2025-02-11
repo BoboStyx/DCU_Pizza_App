@@ -1,3 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Order Your Pizza
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
 {% csrf_token %}
 {% for field in form %}
     <div>
@@ -33,3 +42,9 @@
         {% endif %}
     </div>
 {% endfor %}
+
+<div>
+    <button type="submit">Create Pizza</button>
+</div>
+</form>
+{% endblock %}

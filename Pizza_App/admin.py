@@ -1,19 +1,21 @@
 from django.contrib import admin
-from .models import Pizza, Size, Sauce, Cheese, Topping, Crust, Orders
+from .models import Pizza, Size, Sauce, Cheese, Topping, Crust, Order
 
 # Register your models here.
-admin.register(Size)
+admin.site.register(Size)
 
-admin.register(Crust)
+admin.site.register(Crust)
 
-admin.register(Topping)
+admin.site.register(Topping)
 
-admin.register(Sauce)
+admin.site.register(Sauce)
 
-admin.register(Cheese)
+admin.site.register(Cheese)
+
+admin.site.register(Pizza)
 
 class Table_Pizza(admin.TabularInline):
-    model = Orders.pizza.through 
+    model = Order.pizza.through 
     extra = 0 
 
 class OrdersAdmin(admin.ModelAdmin):
@@ -21,4 +23,4 @@ class OrdersAdmin(admin.ModelAdmin):
     table_pizza = [Table_Pizza]
     exclude = ('pizza',)
 
-admin.site.register(Orders, OrdersAdmin)
+admin.site.register(Order, OrdersAdmin)

@@ -3,11 +3,13 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PizzaForms, PaymentForms, AddressForms
-from .models import Pizza, Orders, Cart
+from .models import Pizza, Order, Cart
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-    return render(request, 'index.html')
+    current_user = request.user
+    orders = Order.objects.filter(user=current_user).order_by("-id")
+    return render(request, 'index.html', {"user": current_user, "orders": orders})
 
 def ordering(request):
     if not request.user.is_authenticated:
@@ -24,13 +26,6 @@ def ordering(request):
         form = PizzaForms()
     return render(request, 'ordering.html', {'form': form})
 
-
-@login_required
-def previous(request):
-    current_user = request.user
-    orders = Orders.objects.filter(user=current_user).order_by("-id")
-    return render(request, 'previous_orders.html', {"user": current_user, "orders": orders})
-
 def user_login(request):
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
@@ -44,12 +39,12 @@ def user_login(request):
 @login_required
 def cart(request):
     cart, creation = Cart.objects.get_or_create(user=request.user)
-    pizzas = cart.pizzas.all()
+    All_pizzas = cart.pizzas.all()
     total = cart.total_price()
 
     if request.method == "POST":
         return redirect("payment")
-    return render(request, 'cart.html', {"cart": cart, "pizzas": pizzas, 'total': total})
+    return render(request, 'cart.html', {"cart": cart, "pizzas": All_pizzas, 'total': total})
 
 def signup(request):
     if request.method == "POST":
@@ -80,18 +75,18 @@ def payment(request):
     pizzas = cart.pizzas.all()
 
     if request.method == "POST":
-        payment_form = PaymentForms(request.POST)
-        address_form = AddressForms(request.POST)
+        payment_forms = PaymentForms(request.POST)
+        address_forms = AddressForms(request.POST)
         
-        if payment_form.is_valid() and address_form.is_valid():
+        if payment_forms.is_valid() and address_forms.is_valid():
 
-            address = address_form.save()
-            order = Orders.objects.create(user=request.user, address=address)
+            address = address_forms.save()
+            order = Order.objects.create(user=request.user, address=address)
             order.pizza.set(pizzas)
             order.save()
 
             cart.pizzas.clear()
-            return redirect('order_complete', order.id)
+            return redirect('completed_order', order.id)
     else:
         payment_forms = PaymentForms()
         address_forms = AddressForms()
@@ -99,7 +94,7 @@ def payment(request):
 
 @login_required
 def order_complete(request, order_id):
-    order = get_object_or_404(Orders, id=order_id)
+    order = get_object_or_404(Order, id=order_id)
     if order.user != request.user:
         return redirect('/')
     return render(request, 'completed_order.html', {"order": order})

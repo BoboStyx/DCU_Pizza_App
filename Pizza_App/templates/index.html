@@ -7,7 +7,62 @@
 {% if user.is_authenticated %}
 <div>
     Hi {{ user.username }}!
-    <a href="{% url 'order' %}" class="btn">Make An Order</a>
+    <div>
+        {% if orders %}
+        <div>
+            {% for order in orders %}
+                <div>
+                    <div>
+                        {% if forloop.first %}Newest Order!{% else %}Delivered{% endif %}
+                    </div>
+                    <div>
+                        <h3>Order #{{ order.id }}</h3>
+                        <div>
+                            {{ order.created_at|date:"M d, Y" }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        {% for pizza in order.pizza.all %}
+                            <div>
+                                <div>
+                                    <div>
+                                        <div>{{ pizza.size }}</div>
+                                        <div>{{ pizza.crust }}</div>
+                                        <div> {{ pizza.sauce }} sauce</div>
+                                        <div> {{ pizza.cheese }} cheese</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    {% for topping in pizza.topping.all %}
+                                        <span>{{ topping.topping }}</span>
+                                    {% empty %}
+                                        <span>No toppings</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <div>€{{ order.total_price }}</div>
+                        <a href="{% url 'completed_order' order.id %}">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div>
+
+            <h3>No Previous Orders</h3>
+            <a href="{% url 'order' %}" class="order-link">
+                Start Your Order
+            </a>
+        </div>
+    {% endif %}
+    </div>
 </div>
 {% else %}
     <p>You are not logged in</p>
