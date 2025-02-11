@@ -5,11 +5,11 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+<div>
     Hi {{ user.username }}!
+    <a href="{% url 'order' %}" class="btn">Make An Order</a>
+</div>
 {% else %}
     <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <br>
-    <a href="{% url 'signup' %}">Sign Up</a>
 {% endif %}
 {% endblock %}

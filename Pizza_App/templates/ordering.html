@@ -1,0 +1,35 @@
+{% csrf_token %}
+{% for field in form %}
+    <div>
+        {{ field.label_tag }}
+
+        {% if field.field.widget.input_type == 'checkbox' %}  <div>
+                {% for choice in field.field.choices %}
+                    <div>
+                        <input type="checkbox" name="{{ field.html_name }}" id="id_{{ field.id_for_label }}_{{ choice.0 }}" value="{{ choice.0 }}" {% if choice.0 in field.value %}checked{% endif %}>
+                        <label for="id_{{ field.id_for_label }}_{{ choice.0 }}">{{ choice.1 }}</label>
+                    </div>
+                {% endfor %}
+                {% if field.errors %}
+                    <ul>
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% else %}  
+        {{ field }}  {% if field.errors %}
+                <ul>
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+
+        {% if field.help_text %}
+            <small>{{ field.help_text }}</small>
+        {% endif %}
+    </div>
+{% endfor %}

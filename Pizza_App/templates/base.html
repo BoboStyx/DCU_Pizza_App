@@ -9,15 +9,36 @@
     </head>
     <body>
         <nav>
-            <li><a href="/">Home</a></li>
+            <li>
+                <a href="/">Stupendous Pizza</a>
+            </li>
             {% if user.is_authenticated %}
-            <li><a href="ordering">Place an Order</a></li>
-            <li><a href="">Cart</a></li>
-            <form action="{% url 'logout' %}" method="post">
+            <li>
+                <a href="{% url 'order' %}"> Order Now</a>
+            </li>
+            <li>
+                <a class="nav-link nav-btn" href="{% url 'previous_orders' %}"> Previous Orders</a>
+            </li>
+            <li>
+                <a href="{% url 'cart' %}"> Pizza Cart</a>
+            </li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <li>
+            <form action="{% url 'logout' %}" method="POST">
                 {% csrf_token %}
-                <button type="submit">Log Out</button>
-              </form>
-        {% endif %}            
+                <button type="submit">Logout</button>
+            </form>
+        </li>
+    {% else %}
+        <li>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        </li>
+        <li>
+            <a href="{% url 'login' %}">Login</a>
+        </li>
+    {% endif %}
 
         {% block content %}
         {% endblock %}
