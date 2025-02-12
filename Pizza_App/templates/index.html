@@ -13,7 +13,7 @@
             {% for order in orders %}
                 <div>
                     <div>
-                        {% if forloop.first %}Newest Order!{% else %}Delivered{% endif %}
+                        {% if forloop.first %}Most Recent Order!{% else %}Delivered{% endif %}
                     </div>
                     <div>
                         <h3>Order #{{ order.id }}</h3>
