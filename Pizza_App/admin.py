@@ -19,7 +19,7 @@ class Table_Pizza(admin.TabularInline):
     extra = 0 
 
 class OrdersAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'total_price', 'address')
+    list_display = ('id', 'user', 'total_price', 'address', 'time_ordered')
     table_pizza = [Table_Pizza]
     exclude = ('pizza',)
 

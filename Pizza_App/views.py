@@ -11,7 +11,7 @@ def index(request):
     orders = ""
     if request.user.is_authenticated:
         current_user = request.user
-        orders = Order.objects.filter(user=current_user).order_by("-id")
+        orders = Order.objects.filter(user=current_user).order_by("-id") 
     return render(request, 'index.html', {"user": current_user, "orders": orders})
 
 def ordering(request):

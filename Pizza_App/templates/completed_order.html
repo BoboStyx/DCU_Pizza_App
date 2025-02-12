@@ -6,13 +6,13 @@ Completed Order!
 <div>
     <div>
         <div>
-            <h1 class="order-title">Your Pizza Adventure Begins!</h1>
-            <p >Order #{{ order.id }} is being prepared</p>
+            <h1>Completed Order!</h1>
+            <p >Order #{{ order.id }} is completed</p>
         </div>
 
         {% if order.pizza.all %}
             <div>
-                <h3>Your Masterpieces</h3>
+                <h3>Your Details</h3>
                 {% for pizza in order.pizza.all %}
                     <div>
                         <div>

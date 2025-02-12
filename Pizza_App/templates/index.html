@@ -18,7 +18,7 @@
                     <div>
                         <h3>Order #{{ order.id }}</h3>
                         <div>
-                            {{ order.created_at|date:"M d, Y" }}
+                            {{ order.time_ordered }}
                         </div>
                     </div>
                     
@@ -27,10 +27,10 @@
                             <div>
                                 <div>
                                     <div>
-                                        <div>{{ pizza.size }}</div>
-                                        <div>{{ pizza.crust }}</div>
-                                        <div> {{ pizza.sauce }} sauce</div>
-                                        <div> {{ pizza.cheese }} cheese</div>
+                                        <div>{{ pizza.size }} Pizza</div>
+                                        <div>{{ pizza.crust }} Crust</div>
+                                        <div> {{ pizza.sauce }} Sauce</div>
+                                        <div> {{ pizza.cheese }} Cheese</div>
                                     </div>
                                 </div>
                                 <div>

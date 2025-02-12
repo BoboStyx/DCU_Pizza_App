@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-from datetime import datetime
+from datetime import datetime, date
 
 # Create your models here.
 class Size(models.Model):
@@ -66,7 +66,7 @@ class Pizza(models.Model):
             string_toppings = "Toppings for the Pizza: " + ", ".join(toppings) + "."
         else:
             string_toppings = ""
-        return f"A {self.size}-sized Pizza with a {self.crust} Crust and {self.sauce} Sauce. {string_toppings}"
+        return f"A {self.size}-sized Pizza with {self.crust} Crust, {self.cheese} Cheese and {self.sauce} Sauce. {string_toppings}"
 
 class Address(models.Model):
     id = models.AutoField(primary_key=True)
@@ -98,6 +98,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     pizza = models.ManyToManyField(Pizza)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
+    time_ordered = models.DateTimeField(auto_now_add=True)
 
     def total_price(self):
         total = sum(float(p.Total_Price()) for p in self.pizza.all())
