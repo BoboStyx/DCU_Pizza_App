@@ -49,7 +49,7 @@ class Pizza(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     crust = models.ForeignKey(Crust, on_delete=models.CASCADE)
     sauce = models.ForeignKey(Sauce, on_delete=models.CASCADE)
-    topping = models.ManyToManyField(Topping, blank=True, default=None)
+    topping = models.ManyToManyField(Topping, blank=True)
     cheese = models.ForeignKey(Cheese, on_delete=models.CASCADE)
 
     def Toppings(self):

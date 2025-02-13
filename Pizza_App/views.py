@@ -20,8 +20,9 @@ def ordering(request):
     if request.method == "POST":
         form = PizzaForms(request.POST)
         if form.is_valid():
-            pizza = form.save()
+            pizza = form.save(commit=False)
             cart, creation = Cart.objects.get_or_create(user=request.user)
+            pizza.save()
             cart.pizzas.add(pizza)
 
             return redirect('cart')
@@ -54,7 +55,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             login(request, form.save())
-            return redirect("order")
+            return redirect("index")
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {"form": form})
@@ -76,6 +77,9 @@ def removed_from_cart(request, pizza_id):
 def payment(request):
     cart = get_object_or_404(Cart, user=request.user)
     pizzas = cart.pizzas.all()
+
+    if not pizzas:
+        return redirect("cart")
 
     if request.method == "POST":
         payment_forms = PaymentForms(request.POST)

@@ -11,5 +11,5 @@ urlpatterns = [
     path('completed_order/order<int:order_id>', views.order_complete, name='completed_order'),
     path('logout/', LogoutView.as_view(next_page="/"), name="logout"),
     path('pizza_cart/', views.cart, name="cart"),
-    path('cart/remove/order#<int:pizza_id>/',views.removed_from_cart, name='removed_from_cart'),
+    path('cart/remove/order<int:pizza_id>/',views.removed_from_cart, name='removed_from_cart'),
 ]

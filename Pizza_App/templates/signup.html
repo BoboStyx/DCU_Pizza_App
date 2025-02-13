@@ -1,6 +1,67 @@
-<h2>Sign Up</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form }}
-  <button type="submit">Sign Up</button>
-</form>
+{% extends 'base.html' %}
+
+{% block title %}
+    Sign Up | Stupendous Pizza
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
+    <div class="card shadow-lg p-4 border-0 rounded-4" style="max-width: 450px; width: 100%;">
+        <h2 class="text-center text-primary fw-bold">📝 Sign Up</h2>
+        <p class="text-center text-muted">Join Stupendous Pizza and start ordering today! 🍕</p>
+
+        <form method="post" class="mt-3">
+            {% csrf_token %}
+            
+            <!-- Django Form Fields -->
+            <div class="mb-3">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="mb-3">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+            </div>
+            <div class="mb-3">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
+
+            <!-- Sign Up Button -->
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-2 shadow-sm rounded-pill">
+                🚀 Sign Up
+            </button>
+        </form>
+
+        <!-- Extra Links -->
+        <div class="text-center mt-3">
+            <span class="text-muted">Already have an account?</span>
+            <a href="{% url 'login' %}" class="fw-bold text-danger">Log In</a>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    /* Improve Input Fields */
+    input[type="text"], input[type="email"], input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    
+    /* Focus Styling */
+    input:focus {
+        border-color: #007bff;
+        box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+        outline: none;
+    }
+</style>
+{% endblock %}
+

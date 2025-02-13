@@ -1,70 +1,75 @@
 {% extends 'base.html' %}
+
 {% block title %}
-    Pizza App
+    Pizza App - Your Orders
 {% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<div>
-    Hi {{ user.username }}!
-    <div>
-        {% if orders %}
-        <div>
-            {% for order in orders %}
-                <div>
-                    <div>
-                        {% if forloop.first %}Most Recent Order!{% else %}Delivered{% endif %}
-                    </div>
-                    <div>
-                        <h3>Order #{{ order.id }}</h3>
-                        <div>
-                            {{ order.time_ordered }}
-                        </div>
-                    </div>
-                    
-                    <div>
-                        {% for pizza in order.pizza.all %}
+<div class="container mt-5 d-flex justify-content-center">
+    {% if user.is_authenticated %}
+    <div class="w-100" style="max-width: 700px;"> <!-- Reduced width -->
+        <div class="card p-4 shadow-lg rounded-4 border-0 bg-light">
+            <h2 class="text-center text-danger fw-bold">Hello, {{ user.username }}!</h2>
+
+            {% if orders %}
+            <div class="list-group mt-3">
+                {% for order in orders %}
+                    <div class="list-group-item mb-4 p-4 shadow rounded-3 border-0 bg-white" style="max-width: 700px; margin: auto;">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div>
-                                    <div>
-                                        <div>{{ pizza.size }} Pizza</div>
-                                        <div>{{ pizza.crust }} Crust</div>
-                                        <div> {{ pizza.sauce }} Sauce</div>
-                                        <div> {{ pizza.cheese }} Cheese</div>
+                                <h4 class="text-primary fw-bold">Order #{{ order.id }}</h4>
+                                <span class="badge {% if forloop.first %} bg-danger {% else %} bg-success {% endif %}">
+                                    {% if forloop.first %} Most Recent Order {% else %} Delivered {% endif %}
+                                </span>
+                            </div>
+                            <div>
+                                <p class="text-muted fst-italic">📅 {{ order.time_ordered }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Pizza Details -->
+                        <div class="mt-3">
+                            {% for pizza in order.pizza.all %}
+                                <div class="card p-3 border-0 rounded-4 mb-2 shadow-sm bg-warning bg-gradient" style="max-width: 650px; margin: auto;">
+                                    <h5 class="fw-bold">🍕 {{ pizza.size }} Pizza</h5>
+                                    <p class="mb-1"><strong>Crust:</strong> {{ pizza.crust }}</p>
+                                    <p class="mb-1"><strong>Sauce:</strong> {{ pizza.sauce }}</p>
+                                    <p class="mb-1"><strong>Cheese:</strong> {{ pizza.cheese }}</p>
+                                    <div class="mt-2">
+                                        {% for topping in pizza.topping.all %}
+                                            <span class="badge bg-danger">{{ topping.topping }}</span>
+                                        {% empty %}
+                                            <span class="badge bg-dark">No toppings</span>
+                                        {% endfor %}
                                     </div>
                                 </div>
-                                <div>
-                                    {% for topping in pizza.topping.all %}
-                                        <span>{{ topping.topping }}</span>
-                                    {% empty %}
-                                        <span>No toppings</span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+                            {% endfor %}
+                        </div>
 
-                    <div>
-                        <div>€{{ order.total_price }}</div>
-                        <a href="{% url 'completed_order' order.id %}">
-                            Details
-                        </a>
+                        <!-- Order Total and View Details -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <h5 class="text-success fw-bold">💰 €{{ order.total_price }}</h5>
+                            <a href="{% url 'completed_order' order.id %}" class="btn btn-lg btn-outline-danger rounded-pill shadow">
+                                View Details 🔍
+                            </a>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-warning text-center p-4 shadow-sm rounded-4" style="max-width: 600px; margin: auto;">
+                <h4 class="fw-bold text-dark">No Previous Orders 😢</h4>
+                <a href="{% url 'order' %}" class="btn btn-lg btn-danger rounded-pill fw-bold mt-3">
+                    Start Your Order 🍕
+                </a>
+            </div>
+            {% endif %}
         </div>
-    {% else %}
-        <div>
-
-            <h3>No Previous Orders</h3>
-            <a href="{% url 'order' %}" class="order-link">
-                Start Your Order
-            </a>
-        </div>
-    {% endif %}
     </div>
+    {% else %}
+    <div class="alert alert-danger text-center p-4 shadow-lg rounded-4" style="max-width: 600px; margin: auto;">
+        <h4 class="fw-bold">You are not logged in 🚫</h4>
+    </div>
+    {% endif %}
 </div>
-{% else %}
-    <p>You are not logged in</p>
-{% endif %}
 {% endblock %}

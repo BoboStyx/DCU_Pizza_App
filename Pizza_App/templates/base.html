@@ -1,46 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
 
-            {% block title %}
-            {% endblock %}
-        </title>
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <style>
+            /* Global Styles */
+            body {
+                font-family: 'Poppins', Arial, sans-serif;
+                background-color: #f4f1ea; /* Warm off-white */
+                color: #333;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            /* Navbar */
+            .navbar {
+                background: linear-gradient(45deg, #FF6F00, #FF9100); /* Bold orange gradient */
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                padding: 12px 20px;
+                transition: all 0.3s ease;
+            }
+
+            .navbar-brand {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: white !important;
+                padding: 5px 15px;
+                border-radius: 5px;
+                transition: background 0.3s ease;
+            }
+
+            .navbar-brand:hover {
+                background: rgba(255, 255, 255, 0.2);
+                text-decoration: none;
+                transform: scale(1.1); /* Slight scaling effect */
+            }
+
+            /* Navbar Items */
+            .navbar-nav {
+                display: flex;
+                align-items: center;
+                gap: 30px; /* Space between links */
+                margin-left: 30px; /* Adjust space between navbar items and brand */
+            }
+
+            .nav-link {
+                color: white !important;
+                font-size: 1.1rem;
+                font-weight: 500;
+                padding: 10px 20px;
+                border-radius: 5px;
+                transition: background 0.3s ease, color 0.3s ease;
+                display: block;
+            }
+
+            .nav-link:hover {
+                background: rgba(255, 255, 255, 0.2);
+                text-decoration: none;
+                color: #FF6F00; /* Highlight text with the brand color */
+                transform: scale(1.05); /* Slight scaling on hover */
+            }
+
+            /* Logout Button */
+            .logout-container {
+                margin-left: auto; /* Moves logout to the far right */
+            }
+
+            .btn-logout {
+                background: transparent;
+                border: none;
+                color: white;
+                font-weight: bold;
+                padding: 8px 16px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: 0.3s;
+                display: block;
+            }
+
+            .btn-logout:hover {
+                background: #D32F2F; /* Brighter red */
+                color: white;
+                transform: scale(1.1); /* Slight scaling */
+            }
+
+            /* Mobile-Friendly Navbar */
+            @media (max-width: 768px) {
+                .navbar-nav {
+                    gap: 15px;
+                    justify-content: center;
+                }
+
+                .navbar-brand {
+                    font-size: 1.5rem;
+                    padding: 5px 10px;
+                }
+
+                .nav-link {
+                    font-size: 1rem;
+                    padding: 8px 12px;
+                }
+            }
+
+            /* Main Content */
+            .content {
+                flex: 1;
+                padding: 40px 20px;
+            }
+
+            /* Footer */
+            footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 15px 0;
+                width: 100%;
+                font-size: 0.9rem;
+                position: relative;
+                bottom: 0;
+                left: 0;
+            }
+        </style>
     </head>
+
     <body>
-        <nav>
-            <li>
-                <a href="/">Stupendous Pizza</a>
-            </li>
-            {% if user.is_authenticated %}
-            <li>
-                <a href="{% url 'order' %}"> Order Now</a>
-            </li>
-            <li>
-                <a href="{% url 'cart' %}"> Pizza Cart</a>
-            </li>
-        {% endif %}
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Stupendous Pizza 🍕</a>
 
-        {% if user.is_authenticated %}
-        <li>
-            <form action="{% url 'logout' %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-        </li>
-    {% else %}
-        <li>
-            <a href="{% url 'signup' %}">Sign Up</a>
-        </li>
-        <li>
-            <a href="{% url 'login' %}">Login</a>
-        </li>
-    {% endif %}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        {% block content %}
-        {% endblock %}
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order' %}">🍕 Order Now</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cart' %}">🛒 Pizza Cart</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <div class="logout-container">
+                        {% if user.is_authenticated %}
+                        <form action="{% url 'logout' %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-logout">🚪 Logout</button>
+                        </form>
+                        {% else %}
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'signup' %}">👤 Sign Up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">🔑 Login</a>
+                            </li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- Footer -->
         <footer>
-            Copyright OA
+            &copy; 2024 Stupendous Pizza 🍕 | Made with ❤️ for pizza lovers.
         </footer>
+
+        <!-- Bootstrap 5 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
