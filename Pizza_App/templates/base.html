@@ -133,7 +133,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="/">Stupendous Pizza 🍕</a>
+                <a class="navbar-brand" href="/">Stupendous Pizza</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -143,10 +143,10 @@
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'order' %}">🍕 Order Now</a>
+                            <a class="nav-link" href="{% url 'order' %}">Order Now</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'cart' %}">🛒 Pizza Cart</a>
+                            <a class="nav-link" href="{% url 'cart' %}">Pizza Cart</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -154,15 +154,15 @@
                         {% if user.is_authenticated %}
                         <form action="{% url 'logout' %}" method="POST" class="d-inline">
                             {% csrf_token %}
-                            <button type="submit" class="btn-logout">🚪 Logout</button>
+                            <button type="submit" class="btn-logout">Logout</button>
                         </form>
                         {% else %}
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'signup' %}">👤 Sign Up</a>
+                                <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}">🔑 Login</a>
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
                             </li>
                         </ul>
                         {% endif %}
@@ -179,7 +179,7 @@
 
         <!-- Footer -->
         <footer>
-            &copy; 2024 Stupendous Pizza 🍕 | Made with ❤️ for pizza lovers.
+            &copy; 2025 Stupendous Pizza | Made with love for pizza lovers.
         </footer>
 
         <!-- Bootstrap 5 JS -->

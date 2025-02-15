@@ -31,7 +31,7 @@
                         <div class="mt-3">
                             {% for pizza in order.pizza.all %}
                                 <div class="card p-3 border-0 rounded-4 mb-2 shadow-sm bg-warning bg-gradient" style="max-width: 650px; margin: auto;">
-                                    <h5 class="fw-bold">🍕 {{ pizza.size }} Pizza</h5>
+                                    <h5 class="fw-bold">{{ pizza.size }} Pizza</h5>
                                     <p class="mb-1"><strong>Crust:</strong> {{ pizza.crust }}</p>
                                     <p class="mb-1"><strong>Sauce:</strong> {{ pizza.sauce }}</p>
                                     <p class="mb-1"><strong>Cheese:</strong> {{ pizza.cheese }}</p>
@@ -48,7 +48,7 @@
 
                         <!-- Order Total and View Details -->
                         <div class="d-flex justify-content-between align-items-center mt-3">
-                            <h5 class="text-success fw-bold">💰 €{{ order.total_price }}</h5>
+                            <h5 class="text-success fw-bold">€{{ order.total_price }}</h5>
                             <a href="{% url 'completed_order' order.id %}" class="btn btn-lg btn-outline-danger rounded-pill shadow">
                                 View Details 🔍
                             </a>
@@ -58,9 +58,9 @@
             </div>
             {% else %}
             <div class="alert alert-warning text-center p-4 shadow-sm rounded-4" style="max-width: 600px; margin: auto;">
-                <h4 class="fw-bold text-dark">No Previous Orders 😢</h4>
+                <h4 class="fw-bold text-dark">No Previous Orders.</h4>
                 <a href="{% url 'order' %}" class="btn btn-lg btn-danger rounded-pill fw-bold mt-3">
-                    Start Your Order 🍕
+                    Start Your Order Here!
                 </a>
             </div>
             {% endif %}
@@ -69,16 +69,16 @@
     {% else %}
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
         <div class="card shadow-lg p-5 border-0 rounded-4 text-center bg-light" style="max-width: 500px; width: 100%;">
-            <h2 class="fw-bold text-danger">🚫 Access Denied</h2>
+            <h2 class="fw-bold text-danger">Access Denied</h2>
             <p class="text-muted fst-italic">You need to log in to view your orders.</p>
     
             <div class="mt-4">
                 <a href="{% url 'login' %}" class="btn btn-lg btn-danger w-100 fw-bold rounded-pill shadow-sm">
-                    🔑 Log In
+                    Log In
                 </a>
                 <p class="mt-3 text-muted">Don't have an account?</p>
                 <a href="{% url 'signup' %}" class="btn btn-lg btn-outline-dark w-100 fw-bold rounded-pill shadow-sm">
-                    📝 Sign Up
+                    Sign Up
                 </a>
             </div>
         </div>

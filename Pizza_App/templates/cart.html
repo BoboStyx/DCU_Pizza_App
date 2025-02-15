@@ -7,14 +7,14 @@
 {% block content %}
 <div class="container mt-5">
     {% if pizzas %}
-        <h2 class="text-center text-danger fw-bold mb-4">🛒 Your Cart</h2>
+        <h2 class="text-center text-danger fw-bold mb-4">Your Cart</h2>
 
         <div class="row justify-content-center">
             {% for pizza in pizzas %}
             <div class="col-md-8 mb-4">
                 <div class="card shadow-sm border-0 rounded-4 p-4 bg-light">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="fw-bold text-primary">🍕 {{ pizza.size }} Pizza</h4>
+                        <h4 class="fw-bold text-primary">{{ pizza.size }} Pizza</h4>
                         <h3 class="text-success fw-bold">€{{ pizza.Total_Price }}</h3>
                     </div>
                     
@@ -61,7 +61,7 @@
 
         <!-- Order Total -->
         <div class="text-center mt-4">
-            <h3 class="fw-bold text-dark">💰 Order Total: <span class="text-success">€{{ total }}</span></h3>
+            <h3 class="fw-bold text-dark"> Order Total: <span class="text-success">€{{ total }}</span></h3>
         </div>
 
         <!-- Action Buttons -->
@@ -78,9 +78,9 @@
         </div>
     {% else %}
         <div class="text-center">
-            <h3 class="fw-bold text-muted">😢 No items in cart</h3>
+            <h3 class="fw-bold text-muted">No items in cart</h3>
             <a href="{% url 'order' %}" class="btn btn-lg btn-danger fw-bold rounded-pill mt-3 shadow-sm">
-                🍕 Make an Order
+                Make an Order
             </a>
         </div>
     {% endif %}
