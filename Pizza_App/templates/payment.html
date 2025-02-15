@@ -1,34 +1,59 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Checkout
+    Checkout
 {% endblock %}
+
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    
-    <h3>Payment Details</h3>
-    <div>
-        {% for field in payment %}
-        <div>
-            <label>{{ field.label }}</label>
-            {{ field }}
-        </div>
-        {% endfor %}
-    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="text-center text-danger fw-bold mb-4">🛒 Secure Checkout</h2>
 
-    <h3>Billing Address</h3>
-    <div>
-        {% for field in address %}
-        <div>
-            <label>{{ field.label }}</label>
-            {{ field }}
-        </div>
-        {% endfor %}
-    </div>
+                    <form method="POST">
+                        {% csrf_token %}
 
-    <button type="submit">
-        Complete Order
-    </button>
-</form>
+                        <!-- Payment Details -->
+                        <h4 class="fw-bold text-primary">💳 Payment Details</h4>
+                        <div class="row g-3 mt-3">
+                            {% for field in payment %}
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Billing Address -->
+                        <h4 class="fw-bold text-primary">🏠 Billing Address</h4>
+                        <div class="row g-3 mt-3">
+                            {% for field in address %}
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-lg btn-success fw-bold px-5 shadow">
+                                ✅ Complete Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'cart' %}" class="text-decoration-none text-muted">
+                    ← Back to Cart
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

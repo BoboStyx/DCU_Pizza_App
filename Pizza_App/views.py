@@ -20,9 +20,8 @@ def ordering(request):
     if request.method == "POST":
         form = PizzaForms(request.POST)
         if form.is_valid():
-            pizza = form.save(commit=False)
+            pizza = form.save()
             cart, creation = Cart.objects.get_or_create(user=request.user)
-            pizza.save()
             cart.pizzas.add(pizza)
 
             return redirect('cart')

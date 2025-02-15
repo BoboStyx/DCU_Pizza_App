@@ -1,62 +1,68 @@
 {% extends 'base.html' %}
+
 {% block title %}
-Completed Order!
+    Completed Order!
 {% endblock %}
+
 {% block content %}
-<div>
-    <div>
-        <div>
-            <h1>Completed Order!</h1>
-            <p >Order #{{ order.id }} is completed</p>
-        </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 text-center">
+                    
+                    <!-- Order Completed Header -->
+                    <h1 class="text-success fw-bold">✅ Order Completed!</h1>
+                    <p class="fs-5 text-muted">Your order <strong>#{{ order.id }}</strong> has been successfully completed.</p>
+                    
+                    <hr class="my-4">
 
-        {% if order.pizza.all %}
-            <div>
-                <h3>Your Details</h3>
-                {% for pizza in order.pizza.all %}
-                    <div>
-                        <div>
-                            <strong>{{ pizza.size }} Pizza</strong>
-                        </div>
-                        <div>
-                            Crust: {{ pizza.crust }}
-                        </div>
-                        <div>
-                            Sauce: {{ pizza.sauce }}
-                        </div>
-                        <div>
-                            Cheese: {{ pizza.cheese }}
-                        </div>
-                        <div>
-                            {% if pizza.topping.all %}
-                            Toppings:
-                                {% for topping in pizza.topping.all %}
-                                    <span>{{ topping.topping }}</span>
-                                {% endfor %}
-                            {% else %}
-                                <span>No toppings</span>
-                            {% endif %}
-                        </div>
+                    <!-- Pizza Details -->
+                    {% if order.pizza.all %}
+                    <h3 class="fw-bold text-primary">🍕 Your Order Details</h3>
+                    <div class="mt-3">
+                        {% for pizza in order.pizza.all %}
+                            <div class="card p-3 border-0 rounded-4 mb-2 shadow-sm bg-warning bg-gradient">
+                                <h5 class="fw-bold">🍕 {{ pizza.size }} Pizza</h5>
+                                <p><strong>Crust:</strong> {{ pizza.crust }}</p>
+                                <p><strong>Sauce:</strong> {{ pizza.sauce }}</p>
+                                <p><strong>Cheese:</strong> {{ pizza.cheese }}</p>
+                                <div>
+                                    <strong>Toppings:</strong>
+                                    {% if pizza.topping.all %}
+                                        {% for topping in pizza.topping.all %}
+                                            <span class="badge bg-danger">{{ topping.topping }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span class="badge bg-dark">No toppings</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div>
-                <p>No pizzas in this order</p>
-            </div>
-        {% endif %}
+                    {% else %}
+                    <div class="alert alert-warning text-center p-3 shadow-sm rounded-4">
+                        <h5 class="fw-bold text-dark">No pizzas in this order</h5>
+                    </div>
+                    {% endif %}
 
-        <div>
-            <h3>Delivery Details</h3>
-            <div>
-                {{ order.address }}
-            </div>
-        </div>
+                    <hr class="my-4">
 
-        <div>
-            <a href="{% url 'index' %}">
-                Return Home
-            </a>
+                    <!-- Delivery Address -->
+                    <h3 class="fw-bold text-primary">📍 Delivery Address</h3>
+                    <div class="alert alert-light border shadow-sm rounded-4 p-3">
+                        <p class="fs-5">{{ order.address }}</p>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Return Home Button -->
+                    <a href="{% url 'index' %}" class="btn btn-lg btn-outline-success fw-bold px-5 shadow">
+                        🏠 Return Home
+                    </a>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

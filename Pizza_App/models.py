@@ -78,7 +78,7 @@ class Address(models.Model):
 
     def __str__(self):
         if self.second_address is not None:
-            return f"{self.name}, {self.first_address}, {self.second_address},{self.town}, {self.eircode}"
+            return f"{self.name}, {self.first_address}, {self.second_address}, {self.town}, {self.eircode}"
         else:
             return f"{self.name}, {self.first_address}, {self.town}, {self.eircode}"
 

@@ -1,87 +1,88 @@
 {% extends 'base.html' %}
+
 {% block title %}
-Your Cart
+    Your Cart
 {% endblock %}
+
 {% block content %}
-{% if pizzas %}
-<div>
-    {% for pizza in pizzas %}
-    <div>
-        <div>
-            <div>
-                <div>
-                    <h5>{{ pizza.size }} Pizza</h5>
-                </div>
-                <h3>€{{ pizza.Total_Price }}</h3>
-            </div>
-            
-            <div>
-                <div>
-                    <span>{{ pizza.crust }} Crust</span>
-                </div>
-                <div>
-                    <span>{{ pizza.sauce }} Sauce</span>
-                </div>
-                <div>
-                    <span>{{ pizza.cheese }} Cheese</span>
-                </div>
-                
-                <div>
-                    <div>
-                        {% if pizza.topping.all %}
-                            {% for topping in pizza.topping.all %}
-                                <span>{{ topping.topping }}</span>
-                            {% endfor %}
-                        {% else %}
-                            <span>No toppings</span>
-                        {% endif %}
+<div class="container mt-5">
+    {% if pizzas %}
+        <h2 class="text-center text-danger fw-bold mb-4">🛒 Your Cart</h2>
+
+        <div class="row justify-content-center">
+            {% for pizza in pizzas %}
+            <div class="col-md-8 mb-4">
+                <div class="card shadow-sm border-0 rounded-4 p-4 bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold text-primary">🍕 {{ pizza.size }} Pizza</h4>
+                        <h3 class="text-success fw-bold">€{{ pizza.Total_Price }}</h3>
+                    </div>
+                    
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="mb-1"><strong>Crust:</strong> {{ pizza.crust }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="mb-1"><strong>Sauce:</strong> {{ pizza.sauce }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="mb-1"><strong>Cheese:</strong> {{ pizza.cheese }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <strong>Toppings:</strong>
+                        <div class="mt-1">
+                            {% if pizza.topping.all %}
+                                {% for topping in pizza.topping.all %}
+                                    <span class="badge bg-danger me-1">{{ topping.topping }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="badge bg-dark">No toppings</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Remove Button -->
+                    <div class="mt-3 text-end">
+                        <form action="{% url 'removed_from_cart' pizza.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger fw-bold">
+                                ❌ Remove Item
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-
-            <div>
-                <form action="{% url 'removed_from_cart' pizza.id %}" method="POST"">
-                    {% csrf_token %}
-                    <button type="submit">
-                        Remove Item
-                    </button>
-                </form>
-            </div>
+            {% endfor %}
         </div>
-    </div>
-    {% endfor %}
-</div>
 
-<div>
-    <div>
-        <span>Order Total</span>
-        <span>€{{ total }}</span>
-    </div>
-</div>
+        <!-- Order Total -->
+        <div class="text-center mt-4">
+            <h3 class="fw-bold text-dark">💰 Order Total: <span class="text-success">€{{ total }}</span></h3>
+        </div>
 
-<div>
-    <form method="POST" class="mb-4">
-        {% csrf_token %}
-        <button type="submit">
-            Proceed to Payment
-        </button>
-    </form>
-    
-    <a href="{% url 'order' %}">
-        Add Another Pizza
-    </a>
+        <!-- Action Buttons -->
+        <div class="text-center mt-4">
+            <form method="POST" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-lg btn-success fw-bold rounded-pill shadow-sm px-5">
+                    ✅ Proceed to Payment
+                </button>
+            </form>
+            <a href="{% url 'order' %}" class="btn btn-lg btn-outline-primary fw-bold rounded-pill shadow-sm px-5 ms-3">
+                ➕ Add Another Pizza
+            </a>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h3 class="fw-bold text-muted">😢 No items in cart</h3>
+            <a href="{% url 'order' %}" class="btn btn-lg btn-danger fw-bold rounded-pill mt-3 shadow-sm">
+                🍕 Make an Order
+            </a>
+        </div>
+    {% endif %}
 </div>
-{% else %}
-<div>
-    <div>
-        <h3>No items in cart</h3>
-        <a href="{% url 'order' %}">
-            Make an Order
-        </a>
-    </div>
-</div>
-{% endif %}
-</div>
-
-
 {% endblock %}
